@@ -1,0 +1,231 @@
+$colors: (
+  primary: #35d073,
+  primary-lighten: #35d07380,
+  secondary: #eeeeee,
+  accent: whitesmoke,
+  gradient: rgb(43, 163, 211),
+  dark: #333,
+  warning: rgba(252, 94, 94, 0.979),
+  load: rgba(211, 211, 211, 0.6),
+  spiner: rgba(51, 51, 51, 0.2),
+);
+
+$transitions: (
+  smooth: 0.25s ease,
+  sudden: 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  spin: 1s infinite linear,
+);
+
+@function getColor($color-name) {
+  @return map-get($colors, $color-name);
+}
+@function getTransition($transition-name) {
+  @return map-get($transitions, $transition-name);
+}
+
+%button {
+  padding: 18px 20px;
+  cursor: pointer;
+  border: 1px solid white;
+  transition: getTransition(smooth);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2), 0px 5px 6px rgba(0, 0, 0, 0.1);
+  &:hover {
+    box-shadow: none;
+  }
+  &:active {
+    transform: scale(0.95);
+    box-shadow: none;
+  }
+}
+
+@keyframes spin1 {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spin2 {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@mixin spiner($diametr, $bgColor) {
+  position: absolute;
+  height: $diametr;
+  width: $diametr;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  border: 10px solid getColor($bgColor);
+  left: 50%;
+  top: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  box-shadow: 0px 0px 10px getColor(primary-lighten);
+}
+
+.button-primary {
+  @extend %button;
+  background-image: linear-gradient(
+    135deg,
+    getColor(primary),
+    getColor(gradient)
+  );
+  color: white;
+  &__button-name {
+    margin-right: 5px;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+.button-simple {
+  @extend %button;
+  background-color: transparent;
+  &__button-name {
+    margin-right: 5px;
+  }
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 450px;
+  max-width: 100%;
+  position: relative;
+  padding: 15px 20px;
+  color: getColor(dark);
+  border-radius: 5px;
+  background-color: getColor(secondary);
+  border: 1px solid rgb(243, 243, 243);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4), 0px 15px 15px rgba(0, 0, 0, 0.1);
+  &__title {
+    margin-top: 20px;
+    background-image: linear-gradient(
+      135deg,
+      getColor(primary),
+      getColor(gradient)
+    );
+    background-clip: text;
+    font-size: 1.2em;
+    -webkit-text-fill-color: transparent;
+  }
+  &__container {
+    width: 100%;
+    margin-top: 20px;
+    &--close {
+      display: none;
+      margin-top: 0px;
+    }
+  }
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: capitalize;
+    margin-bottom: 4px;
+  }
+  &__warning {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+    position: relative;
+    transition: getTransition(smooth);
+    opacity: 0;
+    visibility: hidden;
+    &--open {
+      opacity: 1;
+      visibility: visible;
+    }
+    &:hover {
+      .form__message {
+        transform: scale(1);
+        visibility: visible;
+      }
+    }
+  }
+  &__message {
+    position: absolute;
+    background-color: black;
+    width: 130px;
+    padding: 5px;
+    color: white;
+    font-size: 0.8em;
+    left: -135px;
+    top: -5px;
+    border-radius: 6px;
+    transition: getTransition(smooth);
+    visibility: hidden;
+    transform: scale(0);
+    text-transform: lowercase;
+  }
+  &__triangle {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-left-color: black;
+    right: -12px;
+    top: 7px;
+  }
+  &__input {
+    padding: 10px;
+    display: block;
+    width: 100%;
+    transition: 0.3s ease;
+    outline: none;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 6px;
+    border: 1.1px solid transparent;
+    box-shadow: inset 2px 2px 5px #cdcdcd, inset -2px -2px 5px #ffffff;
+    background-color: getColor(secondary);
+    &--warning {
+      border-color: getColor(warning);
+    }
+    &:focus {
+      border-color: getColor(primary);
+    }
+  }
+  &__bts-container {
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+    margin-top: 20px;
+  }
+  &__loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: getColor(load);
+    display: none;
+    &--load {
+      display: block;
+    }
+  }
+  &__spiner1 {
+    @include spiner(110px, spiner);
+    animation: spin1 2s linear infinite;
+  }
+  &__spiner2 {
+    @include spiner(140px, spiner);
+    animation: spin2 2s linear infinite;
+  }
+}

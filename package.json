@@ -1,0 +1,46 @@
+{
+  "name": "recipe-notes",
+  "version": "1.0.0",
+  "description": "recipe-notes - web-app that help to store a lot of recipes",
+  "main": "serverMain.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serverAuth": "nodemon serverAuth",
+    "serverMain": "nodemon serverMain",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run serverAuth\" \"npm run serverMain\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hai-Vasyl/recipe-notes.git"
+  },
+  "keywords": [
+    "recipe",
+    "web-app",
+    "recipes",
+    "notes",
+    "of",
+    "recipes",
+    "recipes",
+    "notes"
+  ],
+  "author": "Hai-Vasyl / hai.vasyl20@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hai-Vasyl/recipe-notes/issues"
+  },
+  "homepage": "https://github.com/Hai-Vasyl/recipe-notes#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "concurrently": "^5.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.21"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
